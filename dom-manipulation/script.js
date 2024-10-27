@@ -94,7 +94,7 @@ async function fetchQuotesFromServer() {
         const serverQuotes = await response.json();
         const formattedQuotes = serverQuotes.map(quote => ({
             text: quote.title,
-            category: "Server"
+            category: "Server" 
         }));
 
         resolveConflicts(formattedQuotes);
@@ -138,7 +138,11 @@ async function postQuoteToServer(quote) {
     }
 }
 
-setInterval(fetchQuotesFromServer, 30000);
+async function syncQuotes() {
+    await fetchQuotesFromServer(); 
+}
+
+setInterval(syncQuotes, 30000);
 
 document.addEventListener("DOMContentLoaded", () => {
     const lastViewedQuote = JSON.parse(sessionStorage.getItem("lastViewedQuote"));
