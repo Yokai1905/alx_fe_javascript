@@ -94,10 +94,11 @@ async function fetchQuotesFromServer() {
         const serverQuotes = await response.json();
         const formattedQuotes = serverQuotes.map(quote => ({
             text: quote.title,
-            category: "Server" 
+            category: "Server"
         }));
 
         resolveConflicts(formattedQuotes);
+        alert("Quotes synced with server!");
     } catch (error) {
         console.error("Failed to fetch quotes:", error);
     }
@@ -139,7 +140,7 @@ async function postQuoteToServer(quote) {
 }
 
 async function syncQuotes() {
-    await fetchQuotesFromServer(); 
+    await fetchQuotesFromServer();
 }
 
 setInterval(syncQuotes, 30000);
