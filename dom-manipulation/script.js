@@ -12,10 +12,10 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   
     if (filteredQuotes.length > 0) {
       const randomQuote = filteredQuotes[Math.floor(Math.random() * filteredQuotes.length)];
-      document.getElementById("quoteDisplay").innerHTML = `"${randomQuote.text}" - ${randomQuote.category}`;
+      document.getElementById("quoteDisplay").textContent = `"${randomQuote.text}" - ${randomQuote.category}`;
       sessionStorage.setItem("lastViewedQuote", JSON.stringify(randomQuote));
     } else {
-      document.getElementById("quoteDisplay").innerHTML = "No quotes available for this category.";
+      document.getElementById("quoteDisplay").textContent = "No quotes available for this category.";
     }
   }
   
@@ -27,8 +27,8 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
       const newQuote = { text: quoteText, category: quoteCategory };
       quotes.push(newQuote);
       saveQuotes();
-      document.getElementById("quoteDisplay").innerHTML = "New quote added!";
-      populateCategories();  // Update categories if a new one was added
+      document.getElementById("quoteDisplay").textContent = "New quote added!";
+      populateCategories();
     } else {
       alert("Please enter both a quote and a category.");
     }
@@ -87,7 +87,7 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   document.addEventListener("DOMContentLoaded", () => {
     const lastViewedQuote = JSON.parse(sessionStorage.getItem("lastViewedQuote"));
     if (lastViewedQuote) {
-      document.getElementById("quoteDisplay").innerHTML = `"${lastViewedQuote.text}" - ${lastViewedQuote.category}`;
+      document.getElementById("quoteDisplay").textContent = `"${lastViewedQuote.text}" - ${lastViewedQuote.category}`;
     }
     populateCategories();
     filterQuotes();
