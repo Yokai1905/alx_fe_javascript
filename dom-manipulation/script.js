@@ -10,43 +10,6 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
     document.getElementById("quoteDisplay").innerHTML = `"${randomQuote.text}" - ${randomQuote.category}`;
     sessionStorage.setItem("lastViewedQuote", JSON.stringify(randomQuote));
   }
-
-  function createAddQuoteForm() {
-    const formContainer = document.createElement("div");
-  
-    const inputQuoteText = document.createElement("input");
-    inputQuoteText.id = "newQuoteText";
-    inputQuoteText.type = "text";
-    inputQuoteText.placeholder = "Enter a new quote";
-  
-    const inputQuoteCategory = document.createElement("input");
-    inputQuoteCategory.id = "newQuoteCategory";
-    inputQuoteCategory.type = "text";
-    inputQuoteCategory.placeholder = "Enter quote category";
-  
-    const addQuoteButton = document.createElement("button");
-    addQuoteButton.textContent = "Add Quote";
-    addQuoteButton.addEventListener("click", addQuote);
-  
-    formContainer.appendChild(inputQuoteText);
-    formContainer.appendChild(inputQuoteCategory);
-    formContainer.appendChild(addQuoteButton);
-  
-    const importButton = document.createElement("input");
-    importButton.type = "file";
-    importButton.id = "importFile";
-    importButton.accept = ".json";
-    importButton.addEventListener("change", importFromJsonFile);
-  
-    const exportButton = document.createElement("button");
-    exportButton.textContent = "Export Quotes";
-    exportButton.addEventListener("click", exportToJsonFile);
-  
-    formContainer.appendChild(importButton);
-    formContainer.appendChild(exportButton);
-  
-    document.body.appendChild(formContainer);
-  }
   
   function addQuote() {
     const quoteText = document.getElementById("newQuoteText").value.trim();
@@ -95,8 +58,6 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   }
   
   document.addEventListener("DOMContentLoaded", () => {
-    createAddQuoteForm();
-  
     const lastViewedQuote = JSON.parse(sessionStorage.getItem("lastViewedQuote"));
     if (lastViewedQuote) {
       document.getElementById("quoteDisplay").innerHTML = `"${lastViewedQuote.text}" - ${lastViewedQuote.category}`;
@@ -104,4 +65,5 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   });
   
   document.getElementById("newQuote").addEventListener("click", showRandomQuote);
+  document.getElementById("exportQuotes").addEventListener("click", exportToJsonFile);
   
