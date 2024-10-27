@@ -5,6 +5,7 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
 ];
 
 const API_URL = "https://jsonplaceholder.typicode.com/posts";
+
 function showRandomQuote() {
     const selectedCategory = document.getElementById("categoryFilter").value;
     const filteredQuotes = selectedCategory === "all" 
@@ -28,6 +29,7 @@ function addQuote() {
         const newQuote = { text: quoteText, category: quoteCategory };
         quotes.push(newQuote);
         saveQuotes();
+        postQuoteToServer(newQuote);
         document.getElementById("quoteDisplay").textContent = "New quote added!";
         populateCategories();
     } else {
@@ -115,6 +117,25 @@ function resolveConflicts(serverQuotes) {
 
     saveQuotes();
     populateCategories();
+}
+
+async function postQuoteToServer(quote) {
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title: quote.text,
+                body: quote.category
+            })
+        });
+        if (!response.ok) throw new Error("Failed to post quote to server.");
+        console.log("Quote posted successfully:", await response.json());
+    } catch (error) {
+        console.error("Error posting quote:", error);
+    }
 }
 
 setInterval(fetchQuotesFromServer, 30000);
